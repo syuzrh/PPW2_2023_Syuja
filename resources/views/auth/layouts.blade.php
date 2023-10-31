@@ -1,65 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laravel 10 Custom User Registration & Login Tutorial - AllPHPTricks.com</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand, .nav-link {
+            color: #ffffff !important;
+        }
+        .navbar-toggler-icon {
+            background-color: #ffffff;
+        }
+        .navbar-toggler {
+            border: none;
+        }
+        .navbar-toggler:focus {
+            outline: none;
+        }
+    </style>
+    <title>Curriculum Vitae</title>
 </head>
-
-<body class="bg-gray-100 font-sans">
-
-    <!-- Navbar -->
-    <nav class="bg-white p-4 shadow-md">
-        <div class="container mx-auto flex items-center justify-between">
-            <a class="text-lg font-bold" href="{{ URL('/') }}">Curriculum Vitae</a>
-            <div class="lg:flex items-center hidden">
-                <ul class="flex space-x-4">
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a href="{{URL('/')}}" class="navbar-brand">Curriculum Vitae</a>
+            <button class="navbar-toggler" type="button" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+             aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
                     @guest
-                    <li>
-                        <a class="text-gray-700 hover:text-blue-500" href="{{ route('login') }}">Login</a>
+                    <li class="nav-item">
+                        <a href="{{route('login')}}" class="nav-link {{(request()->is('login')) ? 'active':''}}">Login</a>
                     </li>
-                    <li>
-                        <a class="text-gray-700 hover:text-blue-500" href="{{ route('register') }}">Register</a>
+                    <li class="nav-item">
+                        <a href="{{route('register')}}" class="nav-link {{(request()->is('register')) ? 'active':''}}">Register</a>
                     </li>
                     @else
                     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            {{ Auth::user()->name }}
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                    @csrf
-                </form>
-            </li>
-        </ul>
-    </li>
-@endguest
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"
+                                >Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @endguest
                 </ul>
             </div>
-            <button class="lg:hidden navbar-toggler focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
         </div>
     </nav>
-
-    <!-- Content -->
-    <div class="container mx-auto p-4">
+    <div class="container my-5">
         @yield('content')
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
-
 </html>

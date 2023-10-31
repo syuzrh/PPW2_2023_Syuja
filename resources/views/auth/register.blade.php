@@ -1,40 +1,56 @@
 @extends('auth.layouts')
 
 @section('content')
-    <div class="flex justify-center mt-5">
-        <div class="w-1/2 bg-white p-4 rounded-lg shadow-lg">
-            <h1 class="text-2xl font-semibold mb-4">Register</h1>
-            <form action="{{ route('store') }}" method="post">
-                @csrf
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                    <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('name') border-red-500 @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Your Name">
-                    @error('name')
-                        <span class="text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
-                    <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') border-red-500 @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Email Address">
-                    @error('email')
-                        <span class="text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                    <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('password') border-red-500 @enderror" id="password" name="password" placeholder="******************">
-                    @error('password')
-                        <span class="text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-                    <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password_confirmation" name="password_confirmation" placeholder="******************">
-                </div>
-                <div class="mb-4">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
-                </div>
-            </form>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+
+        <div class="card">
+            <div class="card-header">Register</div>
+            <div class="card-body">
+                <form action="{{ route('store') }}" method="post">
+                    @csrf
+                    <div class="mb-3 row">
+                        <label for="name" class="col-md-4 col-form-label text-md-end text-start">Name</label>
+                        <div class="col-md-6">
+                          <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                            @if ($errors->has('name'))
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="email" class="col-md-4 col-form-label text-md-end text-start">Email Address</label>
+                        <div class="col-md-6">
+                          <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                            @if ($errors->has('email'))
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="password" class="col-md-4 col-form-label text-md-end text-start">Password</label>
+                        <div class="col-md-6">
+                          <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
+                            @if ($errors->has('password'))
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="password_confirmation" class="col-md-4 col-form-label text-md-end text-start">Confirm Password</label>
+                        <div class="col-md-6">
+                          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Register">
+                    </div>
+                    
+                </form>
+            </div>
         </div>
-    </div>
+    </div>    
+</div>
+    
 @endsection

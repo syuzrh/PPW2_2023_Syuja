@@ -26,3 +26,6 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::post('/logout', 'logout')->name('logout');
    });
+
+Route::get('/send-mail', [SendEmailController::class,'index'])->name('kirim-email');
+Route::post('/postemail', [SendEmailController::class, 'store'])->name('postemail');   
