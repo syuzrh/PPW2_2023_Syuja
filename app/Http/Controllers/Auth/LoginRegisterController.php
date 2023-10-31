@@ -42,7 +42,7 @@ class LoginRegisterController extends Controller
             'body' => $request->email
         ];
         
-        Mail::to($request->email)->send(new SendEmail($content));
+        Mail::to($request->email)->queue(new SendEmail($content));
 
         $credentials = $request->only('email','password');
         Auth::attempt($credentials);
