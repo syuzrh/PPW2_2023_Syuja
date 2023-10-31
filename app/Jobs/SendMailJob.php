@@ -14,7 +14,9 @@ use App\Mail\SendEmail;
 class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    
     public $data;
+    
     /**
      * Create a new job instance.
      */
