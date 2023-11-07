@@ -29,3 +29,5 @@ Route::controller(LoginRegisterController::class)->group(function() {
 
 Route::get('/send-mail', [SendEmailController::class,'index'])->name('kirim-email');
 Route::post('/postemail', [SendEmailController::class, 'store'])->name('postemail');   
+
+//testes
