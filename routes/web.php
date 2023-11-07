@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,8 @@ Route::controller(LoginRegisterController::class)->group(function() {
 Route::get('/send-mail', [SendEmailController::class,'index'])->name('kirim-email');
 Route::post('/postemail', [SendEmailController::class, 'store'])->name('postemail');   
 
-//testes
+Route::controller(DashboardController::class)->group(function () {
+    Route::get('/image', 'index')->name('image');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/store-edit/{id}', 'sendEdit')->name('storeEdit');
+});
