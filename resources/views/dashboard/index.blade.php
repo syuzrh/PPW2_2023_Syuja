@@ -28,10 +28,10 @@
                     <th scope="row">{{$i}}</th>
                     <td>{{$u->name}}</td>
                     <td>{{$u->email}}</td>
-                    <td><img src="{{asset('storage/app/profile/thumbnail/thumb_' . $u->photo)}}" alt=""></td>
-                    <td><img src="{{asset('storage/app/profile/thumbnail/square_' . $u->photo)}}" alt=""></td>
+                    <td><img src="{{asset('storage/profile/' . $u->photo)}}" alt=""></td>
+                    <td><img src="{{asset('storage/profile/thumbnail/square_' . $u->photo)}}" alt=""></td>
                     <td><a href="#" onclick="Swal.fire({
-                        imageUrl: `{{asset('storage/app/profile/' . $u->photo)}}`,
+                        imageUrl: `{{asset('storage/profile/' . $u->photo)}}`,
                     
                         imageAlt: 'An image'
                       })">Preview</a></td>
@@ -47,4 +47,3 @@
     </div>
 </div>
 @endsection
-{{-- <img src="{{asset('storage/app/profile/' . $u->photo)}}" alt=""> --}}
