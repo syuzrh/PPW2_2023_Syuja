@@ -61,11 +61,13 @@ class DashboardController extends Controller
             $square = 'square_'.$filenametostore;
 
             $request->file('photo')->storeAs('profile', $filenametostore);
+            $request->file('photo')->storeAs('profile/thumbnail', $thumb);
             $request->file('photo')->storeAs('profile/thumbnail', $square);
-            $smallthumbnailpath = storage_path('app/profile/thumbnail/'.$square);
+
+            $smallthumbnailpath = public_path('storage/profile/thumbnail/'.$thumb);
             $this->createThumbnail($smallthumbnailpath, 150, 93);
 
-            $mediumthumbnailpath = storage_path('app/profile/thumbnail/'.$square);
+            $mediumthumbnailpath = public_path('storage/profile/thumbnail/'.$square);
             $this->createSquare($mediumthumbnailpath, 300, 300);
 
 
@@ -86,18 +88,11 @@ class DashboardController extends Controller
 
     public function createThumbnail($path, $width, $height)
 {
-    try {
-        if (file_exists($path)) {
             $img = Image::make($path)->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $img->save($path);
-        } else {
-            dd('File not found: ' . $path);
-        }
-    } catch (\Exception $e) {
-        dd($e->getMessage());
-    }
+       
 }
 
 public function createSquare($path, $width, $height)
