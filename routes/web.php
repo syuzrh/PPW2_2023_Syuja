@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GalleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,5 @@ Route::controller(DashboardController::class)->group(function () {
     Route::get('/edit/{id}', 'edit')->name('edit');
     Route::post('/store-edit/{id}', 'sendEdit')->name('storeEdit');
 });
+
+Route::resource('gallery', GalleryController::class);
