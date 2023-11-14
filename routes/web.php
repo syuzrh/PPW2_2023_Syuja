@@ -39,3 +39,4 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 Route::resource('gallery', GalleryController::class);
+Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
