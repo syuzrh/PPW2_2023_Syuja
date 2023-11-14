@@ -16,7 +16,10 @@ class GalleryController extends Controller
         $data = [
             'id' => "posts",
             'menu' => 'Gallery',
-            'galleries' => Post::where('picture', '!=', '')->whereNotNull('picture')->orderBy('created_at', 'desc')->paginate(30),
+            'galleries' => Post::whereNotNull('picture')
+                ->where('picture', '!=', '')
+                ->orderBy('created_at', 'desc')
+                ->paginate(30),
         ];
 
         return view('gallery.index')->with($data);
@@ -41,30 +44,22 @@ class GalleryController extends Controller
             'picture' => 'image|nullable|max:1999',
         ]);
 
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->description = $request->input('description');
-
         if ($request->hasFile('picture')) {
-            $uploadedFile = $request->file('picture');
-            $filename = 'post_image/' . uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
-            Storage::putFileAs('public', $uploadedFile, $filename);
-            $post->picture = basename($filename);
+            $basename = uniqid() . time();
+            $extension = $request->file('picture')->getClientOriginalExtension();
+            $filenameSimpan = "{$basename}.{$extension}";
+            $path = $request->file('picture')->storeAs('posts_image', $filenameSimpan);
         } else {
-            $post->picture = 'noimage.png';
+            $filenameSimpan = 'noimage.png';
         }
 
+        $post = new Post;
+        $post->picture = $filenameSimpan;
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
         $post->save();
 
         return redirect('gallery')->with('success', 'Berhasil menambahkan data baru');
-    }
-
-    /**
-     * Menampilkan resource yang ditentukan.
-     */
-    public function show(string $id)
-    {
-        // Tidak digunakan dalam contoh ini
     }
 
     /**
@@ -90,23 +85,17 @@ class GalleryController extends Controller
         $post = Post::find($id);
 
         if ($request->hasFile('picture')) {
-            // Hapus gambar lama jika ada
-            if ($post->picture != 'noimage.png') {
-                Storage::delete('public/' . $post->picture);
-            }
+            $this->deleteOldImage($post);
 
-            // Proses gambar baru
             $uploadedFile = $request->file('picture');
-            $filename = 'post_image/' . uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
+            $filename = 'posts_image/' . uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
 
             Storage::putFileAs('public', $uploadedFile, $filename);
 
             $post->picture = basename($filename);
         }
 
-        $post->title = $request->input('title');
-        $post->description = $request->input('description');
-        $post->save();
+        $this->updatePostData($post, $request);
 
         return redirect('gallery')->with('success', 'Berhasil memperbarui data');
     }
@@ -118,14 +107,30 @@ class GalleryController extends Controller
     {
         $post = Post::find($id);
 
-        // Hapus gambar dari penyimpanan
-        if ($post->picture != 'noimage.png') {
-            Storage::delete('public/' . $post->picture);
-        }
+        $this->deleteOldImage($post);
 
-        // Hapus data dari database
         $post->delete();
 
         return redirect('gallery')->with('success', 'Berhasil menghapus data');
+    }
+
+    /**
+     * Menghapus gambar lama dari penyimpanan jika ada.
+     */
+    private function deleteOldImage(Post $post)
+    {
+        if ($post->picture != 'noimage.png') {
+            Storage::delete('public/' . $post->picture);
+        }
+    }
+
+    /**
+     * Memperbarui data post berdasarkan request.
+     */
+    private function updatePostData(Post $post, Request $request)
+    {
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        $post->save();
     }
 }
