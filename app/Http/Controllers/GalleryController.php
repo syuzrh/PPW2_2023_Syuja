@@ -90,6 +90,8 @@ class GalleryController extends Controller
             $uploadedFile = $request->file('picture');
             $filename = 'posts_image/' . uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
 
+            dd($filename);
+
             Storage::putFileAs('public', $uploadedFile, $filename);
 
             $post->picture = basename($filename);
@@ -120,7 +122,7 @@ class GalleryController extends Controller
     private function deleteOldImage(Post $post)
     {
         if ($post->picture != 'noimage.png') {
-            Storage::delete('public/' . $post->picture);
+            Storage::delete('posts_image/' . $post->picture);
         }
     }
 
