@@ -88,11 +88,11 @@ class GalleryController extends Controller
             $this->deleteOldImage($post);
 
             $uploadedFile = $request->file('picture');
-            $filename = 'posts_image/' . uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
+            $filename =  uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
 
             // dd($filename);
 
-            Storage::putFileAs('public', $uploadedFile, $filename);
+            Storage::putFileAs('posts_image', $uploadedFile, $filename);
 
             $post->picture = basename($filename);
         }
