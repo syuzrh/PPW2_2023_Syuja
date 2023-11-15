@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\InfoController;
+use App\Http\Controllers\GreetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +41,7 @@ Route::controller(DashboardController::class)->group(function () {
 });
 
 Route::resource('gallery', GalleryController::class);
+
+Route::get('/info', [InfoController::class, 'index'])->name('info');
+
+Route::get('/greet', [GreetController::class, 'greet'])->name('greet');
