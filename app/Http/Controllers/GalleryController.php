@@ -90,7 +90,7 @@ class GalleryController extends Controller
             $uploadedFile = $request->file('picture');
             $filename = 'posts_image/' . uniqid() . time() . '.' . $uploadedFile->getClientOriginalExtension();
 
-            dd($filename);
+            // dd($filename);
 
             Storage::putFileAs('public', $uploadedFile, $filename);
 
