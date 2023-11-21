@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\GreetController;
+use App\Http\Controllers\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +46,8 @@ Route::resource('gallery', GalleryController::class);
 Route::get('/info', [InfoController::class, 'index'])->name('info');
 
 Route::get('/greet', [GreetController::class, 'greet'])->name('greet');
+
+// Route::get('/api/gallery', [
+//     ApiController::class,
+//     'getAllGallery'
+// ]);
